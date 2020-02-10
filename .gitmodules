@@ -1,0 +1,3 @@
+[submodule "qml-webchannel-websockets"]
+	path = qml-webchannel-websockets
+	url = https://github.com/retifrav/qml-webchannel-websockets
