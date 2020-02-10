@@ -1,0 +1,109 @@
+﻿<!--!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"-->
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 
+<BASE href="file://E:/dev/MFC/DHtml/DHtml/">
+</HEAD>
+<BODY ID=CDHtmlDlg BGCOLOR=LIGHTGREY style="font-family:MS Shell Dlg;font-size:9">
+<img src="view-hierarchy.png" alt="图片"/>
+<TABLE WIDTH=100% HEIGHT=100%>
+<TR WIDTH=100% HEIGHT=45%>
+<TD ALIGN=CENTER VALIGN=BOTTOM>
+    <div id="example"></div>
+    <div id="MsgBtn">2222</div>
+</TD>
+</TR>
+<TR WIDTH=100% HEIGHT=100%>
+<TD ALIGN=RIGHT VALIGN=BOTTOM>
+<BUTTON STYLE="WIDTH:100" ID="ButtonOK">确定</BUTTON>&nbsp;<BUTTON STYLE="WIDTH:100" ID="ButtonCancel">取消</BUTTON>&nbsp;<BUTTON STYLE="WIDTH:100" ID="ButtonDDD" onclick="onClickDDD();">设置</BUTTON>
+</TD>
+</TR>
+</TABLE>
+
+<!--SCRIPT type=text/javascript>//<![CDATA[window.external.set_pos(600, 400);//]]></! --SCRIPT-->
+    <script type="text/javascript">
+function CppCallJsFunc() {
+    alert("JS alert弹出框！");
+    //UpdateInfo();
+    GetMsg();
+    UpdateInfo();
+}
+function onClickDDD()
+{
+    window.external.set_pos(600, 400);
+}
+function UpdateInfo() {
+    //alert('Before GetSrInfo');
+    try {
+        var arr = (new VBArray(window.external.GetSrInfo())).toArray();
+        alert(JSON.stringify(arr));
+    }
+    catch (e) {
+        e.errorno;//0x800A1395
+    }
+    //var objArrayInfo = new VBArray(window.external.GetSrInfo());//;
+   
+    //alert(JSON.stringify(objArrayInfo));
+    //alert(JSON.stringify(window.external.GetSrInfo()));
+}
+function GetMsg() {
+    var strMsg = window.external.GetString();
+    document.getElementById("MsgBtn").innerHTML = strMsg;
+    alert(strMsg);
+}
+    </script>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <!-- 生产环境中不建议使用 -->
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <!--<h1>Hello, world!</h1>,-->
+    <script type="text/babel">
+		class Clock extends React.Component {
+		  constructor(props) {
+		    super(props);
+		    this.state = {date: new Date(),rand:0};
+		  }
+		 
+		  componentDidMount() {
+		    this.timerID = setInterval(
+		      () => this.tick(),
+		      1000
+		    );
+		  }
+		 
+		  componentWillUnmount() {
+		    clearInterval(this.timerID);
+		  }
+		 
+		  tick() {
+			  	try {
+					var arr = (new VBArray(window.external.GetSrInfo())).toArray();
+				    this.setState({
+				      date: new Date(),
+				      rand: JSON.stringify(arr[0])
+				    });
+            	}catch (e) {
+                	e.errorno;//0x800A1395
+            	}
+           }
+		 
+		  render() {
+		    return (
+		      <div>
+		        <h1>Hello, world!</h1>
+		        <h2>现在是 {this.state.date.toLocaleTimeString()}.</h2>
+                <h3>{this.state.rand}</h3>
+		      </div>
+		    );
+		  }
+		}
+
+        ReactDOM.render(
+        <Clock />,
+        document.getElementById('example')
+        );
+    </script>
+</BODY>
+</HTML>
